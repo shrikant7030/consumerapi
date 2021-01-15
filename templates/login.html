@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+        <h3>Login</h3>
+
+        <font color="red">
+            {{resp}} <br><br>
+        </font>
+        <form action="http://localhost:8000/validate/" method="post">
+            {% csrf_token %}
+            Username : <input type="text" name="username"> <br><br>
+            Password : <input type="text" name="password"> <br><br>
+            <input type="submit" value="submit" name="submit">
+            <a href="http://localhost:8000/register/">SignUp</a> <br><br>
+
+        </form>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    Welcome {{ user|get_item:'username' }}
+    <br><br>
+
+    <a href="http://localhost:8000/logout/">Logout</a>
+    <br><br><br>
+
+
+    {% if user|get_item:'role' == 'A' %}
+        <a href="http://localhost:8000/add/">Add Product</a>    &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="http://localhost:8000/update/">Update Product</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="http://localhost:8000/delete/0">Delete Product</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+    {% endif %}
+    <a href="http://localhost:8000/search/">Search Product</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="http://localhost:8000/getall/">Get All Products</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+
+
+    {% if flag %}
+        {% if flag == 'AD' %}   <br><br>
+            {{resp}} <br> <br>
+            <form action="http://localhost:8000/add/" method="post">
+                {% csrf_token %}
+                Item Id: <input type="text" name="itid" value=""><br><br>
+                Item Name :<input type="text" name="itnm" value=""><br><br>
+                Item Price<input type="text" name="itpri" value=""><br><br>
+                Item Qty : <input type="text" name="itqty" value=""><br><br>
+                <input type="submit">
+            </form>
+
+            </form>
+        {% elif flag == 'AL' %}
+            <table border="1">
+                    <thead>
+                        <th>Item Id</th><th>Item Name</th><th>Item Price</th><th>Item Qty</th>
+                    </thead>
+                    <tbody>
+                            {% for prod in products %}
+                                <tr>
+                                    <td>{{prod.itemId}}</td>
+                                    <td>{{prod.itemName}}</td>
+                                    <td>{{prod.itemPrice}}</td>
+                                    <td>{{prod.itemQty}}</td>
+
+                                </tr>
+                            {% endfor %}
+
+                    </tbody>
+            </table>
+
+    {% elif flag == 'DE' %}
+        <br><br>{{resp}} <br><br>
+        <form action="http://localhost:8000/prod/delete/" method="post">
+            {% csrf_token %}
+            Enter Product ID For Delete : <input type="text" name="delid" ><br><br>
+            <input type="submit">
+
+        </form>
+
+    {% elif flag == 'SE' %}
+        <br><br>{{resp}} <br><br>
+        <form action="http://localhost:8000/prod/search/" method="post">
+            {% csrf_token %}
+            Enter Product ID For Search : <input type="text" name="searchid" ><br><br>
+            <input type="submit">
+
+        </form>
+
+
+    {% endif %}
+
+    {% endif %}
+
+
+</body>
+</html>
